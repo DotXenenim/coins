@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coins</title>
+
+<style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: black;
+            color: white;
+            min-height: 100vh; /* Takes full viewport height */
+            
+            /* CSS Flexbox to center everything vertically and horizontally */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Vertical alignment */
+            align-items: center;     /* Horizontal alignment */
+            text-align: center;
+        }
+
+        .box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap; /* Allows multiple coins to wrap neatly */
+            gap: 10px;       /* Adds spacing between generated coins */
+        }
+
+        #coins img {
+            display: inline-block;
+            vertical-align: middle;
+            pointer-events: none;
+        }
+
+        /* Coin Container setup for 3D Perspective */
+.coin-container {
+    perspective: 1000px;
+}
+
+/* Base Coin Element */
+.coin {
+    width: 120px;
+    height: 120px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out;
+}
+
+/* CSS Keyframe Animation for the Flip */
+@keyframes coinFlipHeads {
+    0% {
+        transform: rotateY(0deg) translateY(0) scale(1);
+    }
+    50% {
+        transform: rotateY(900deg) translateY(-180px) scale(1.25);
+    }
+    100% {
+        transform: rotateY(1800deg) translateY(0) scale(1);
+    }
+}
+
+@keyframes coinFlipTails {
+    0% {
+        transform: rotateY(0deg) translateY(0) scale(1);
+    }
+    50% {
+        transform: rotateY(900deg) translateY(-180px) scale(1.25);
+    }
+    100% {
+        transform: rotateY(1980deg) translateY(0) scale(1);
+    }
+}
+
+/* Active Animation Classes */
+.coin.flipping-heads {
+    animation: coinFlipHeads 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.coin.flipping-tails {
+    animation: coinFlipTails 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+</style>
+</head>
+<body id="body" style="background-color: black;">
+    <div class="box">
+        <span id="coins"></span>
+    </div>
+    
+    <footer>
+        <h1></h1>
+    </footer>
+</body>
+
+
+<script>
+    let on = true;
+    let coins = [];
+
+    const body = document.getElementById('body');
+    const height = window.innerHeight;
+    
+    body.style.height = height + 'px'; 
+    body.addEventListener('click', roll);
+    
+    function roll() {
+        console.log('works');
+        const coin = document.createElement('img');
+        if (Math.random() > 0.5) {
+            coin.src = 'img/coinHeads.png'
+        } else {
+            coin.src = 'img/coinTails.png'
+        }
+        document.getElementById('coins').appendChild(coin);
+    }
+</script>
+
+</html>
